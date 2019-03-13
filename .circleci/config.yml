@@ -14,7 +14,7 @@ jobs:
           command: |
             SANITIZED_BRANCH=$(echo "$CIRCLE_BRANCH" | iconv -t ascii//TRANSLIT | sed -r s/[^a-zA-Z0-9\.]+/-/g | sed -r s/^-+\|-+$//g | tr A-Z a-z)
             docker login -u $DOCKER_USER -p $DOCKER_PASS quay.io
-            docker pull quay.io/plotly/conda-channel:master
+            docker pull quay.io/plotly/conda-channel:master || true
             docker pull quay.io/plotly/conda-channel:${SANITIZED_BRANCH} || true
             docker build -t quay.io/plotly/conda-channel:${SANITIZED_BRANCH} .
             docker push quay.io/plotly/conda-channel:${SANITIZED_BRANCH}
